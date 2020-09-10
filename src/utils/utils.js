@@ -5,8 +5,8 @@ export const cohortId = 'cohort-12';
 export const formElements = {
   formSelector: '.popup__container',
   inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_disabled',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible',
 };

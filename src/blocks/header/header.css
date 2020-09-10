@@ -1,6 +1,9 @@
 @import url(./__logo/header__logo.css);
 
 .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     max-width: 882px;
     margin: 0 auto;
     padding-top: 45px;

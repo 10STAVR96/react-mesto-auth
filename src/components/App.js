@@ -2,6 +2,8 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import Register from './Register';
+import Login from './Login';
 import EditProfilePopup from './EditProfilePopup';
 import ConfirmationPopup from './ConfirmationPopup';
 import EditAvatarPopup from './EditAvatarPopup';
@@ -150,6 +152,8 @@ function App() {
       />
       <Footer />
 
+      <Register />
+      <Login />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen}  onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
       <AddPlacePopup isOpen={isAddPlacePopupOpen}  onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
