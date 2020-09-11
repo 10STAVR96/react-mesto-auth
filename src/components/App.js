@@ -1,9 +1,11 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch, Redirect  } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import Register from './Register';
 import Login from './Login';
+import InfoTooltip from './InfoTooltip';
 import EditProfilePopup from './EditProfilePopup';
 import ConfirmationPopup from './ConfirmationPopup';
 import EditAvatarPopup from './EditAvatarPopup';
@@ -13,8 +15,12 @@ import api from '../utils/api';
 import FormValidator from '../utils/FormValidator';
 import { formElements } from '../utils/utils';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [successInfoToolTip, setSuccessInfoToolTip] = React.useState('aad');
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -25,6 +31,12 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [cardDelete, setCardDelete] = React.useState([]);
 
+  function handleSuccessInfoToolTip() {
+    setSuccessInfoToolTip(true);
+  }
+  function handleInfoTooltipOpen() {
+    setIsInfoTooltipOpen(true);
+  }
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
@@ -57,6 +69,8 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(false);
     setIsConfirmPopupOpen(false);
+    setIsInfoTooltipOpen(false);
+    setTimeout(setSuccessInfoToolTip, 2000, false);
     setCurrentCard({});
   }
 
@@ -140,25 +154,41 @@ function App() {
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-      <Header />
-      <Main 
-        onEditProfile={handleEditProfileClick} 
-        onAddPlace={handleAddPlaceClick} 
-        onEditAvatar={handleEditAvatarClick} 
-        onImageClick={setCurrentImage} 
-        cards={cards} 
-        onCardLike={handleCardLike} 
-        onCardDelete={handleCardDelete} 
-      />
-      <Footer />
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <ProtectedRoute 
+            path="/cards" 
+            loggedIn={loggedIn}
+            component={Main}
+            onEditProfile={handleEditProfileClick} 
+            onAddPlace={handleAddPlaceClick} 
+            onEditAvatar={handleEditAvatarClick} 
+            onImageClick={setCurrentImage} 
+            cards={cards} 
+            onCardLike={handleCardLike} 
+            onCardDelete={handleCardDelete}
+          />
+          <Route path="/sign-up">
+            <Register openInfoToolTip={handleInfoTooltipOpen} successInfoToolTip={handleSuccessInfoToolTip} />
+          </Route>
+          <Route path="/sign-in">
+            <Login openInfoToolTip={handleInfoTooltipOpen} successInfoToolTip={handleSuccessInfoToolTip} />
+          </Route>
+          <Route path="/">
+            { loggedIn ? <Redirect to="/cards" /> : <Redirect to="/sign-in" /> }
+          </Route>
+        </Switch>
 
-      <Register />
-      <Login />
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen}  onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-      <AddPlacePopup isOpen={isAddPlacePopupOpen}  onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-      <ConfirmationPopup isOpen={isConfirmPopupOpen} onSubmit={handleConfirmDeleteCardSubmit} onClose={closeAllPopups} />
-      <ImagePopup isOpen={selectedCard} onClose={closeAllPopups} card={currentCard} />
+        <Footer />
+        <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} successStyle={successInfoToolTip} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen}  onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen}  onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+        <ConfirmationPopup isOpen={isConfirmPopupOpen} onSubmit={handleConfirmDeleteCardSubmit} onClose={closeAllPopups} />
+        <ImagePopup isOpen={selectedCard} onClose={closeAllPopups} card={currentCard} />
+
+      </BrowserRouter>
       </CurrentUserContext.Provider>
     </div>
   );

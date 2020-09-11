@@ -1,19 +1,43 @@
 import React from 'react';
-//import { Link, withRouter } from 'react-router-dom';
-import logo from '../images/logo.svg';
+import { NavLink, withRouter } from 'react-router-dom';
+import * as auth from '../utils/auth';
 
-function Register() {
+function Register(props) {
+  const [info, setInfo] = React.useState({
+    email: '',
+    password: ''
+  });
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInfo({
+      [name]: value
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    let { email, password } = info;
+    auth.register(email, password).then((res) => {
+      if (res) {
+        props.successInfoToolTip();
+        props.openInfoToolTip();
+        props.history.push('/sign-in');
+      } else {
+        props.openInfoToolTip();
+        setInfo({
+          message: '400 - некорректно заполнено одно из полей'
+        })
+      }
+    })
+  }
+
   return (
     <div className="authorization">
-      <div className="authorization__header">
-        <img className="header__logo" src={logo} alt="лого" />
-        <nav className="authorization__menu">
-          <button className="authorization__header-link">Войти</button>
-        </nav>
-      </div>
-      <form className="authorization__form">
+      <form onSubmit={handleSubmit} className="authorization__form">
         <h2 className="authorization__form-header">Регистрация</h2>
         <input 
+          onChange={handleChange}
           type="email" 
           className="authorization__input"
           id="email"
@@ -22,6 +46,7 @@ function Register() {
           placeholder="Email"
         />
         <input 
+          onChange={handleChange}
           type="password" 
           className="authorization__input" 
           id="password"
@@ -31,10 +56,13 @@ function Register() {
           pattern="[A-Za-zА-Яа-яЁё0-9 -]{2,40}" 
         />
         <button type="submit" className="authorization__submit">Зарегистрироваться</button>
-        <button className="authorization__form-link">Уже зарегистрированы? Войти</button>
+        <div className="authorization__form-nav">
+          <span>Уже зарегистрированы?&nbsp;</span>
+          <NavLink className="authorization__form-link" to="/sign-in">Войти</NavLink>
+        </div>
       </form>
     </div>
   );
 }
 
-export default Register;
+export default withRouter(Register);

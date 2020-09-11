@@ -1,19 +1,26 @@
-.authorization__header-link {
+.header__link {
   font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 22px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.header__link:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 1023px) {
-  .authorization__header-link {
+  .header__link {
     margin-right: 30px;
   }
 }
 
 @media screen and (max-width: 374px) {
-  .authorization__header-link {
+  .header__link {
     font-size: 14px;
     line-height: 17px;
   }

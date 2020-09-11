@@ -1,13 +1,12 @@
-import { cohortId } from './utils';
-export const BASE_URL = `https://mesto.nomoreparties.co/v1/${cohortId}/`;
+export const BASE_URL = 'https://auth.nomoreparties.co';
 
-export const register = () => {
-  return fetch(`${BASE_URL}/sign-up`, {
+export const register = (email, password) => {
+  return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
-
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify()
+    body: JSON.stringify({ email, password })
   })
   .then((res) => res.json())
   .then((res) => res)

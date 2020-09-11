@@ -1,19 +1,30 @@
 import React from 'react';
-//import { Link, withRouter } from 'react-router-dom';
-import logo from '../images/logo.svg';
+import { NavLink } from 'react-router-dom';
+import * as auth from '../utils/auth';
 
 function Register() {
+  const [info, setInfo] = React.useState({
+    email: '',
+    password: ''
+  });
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInfo({
+      [name]: value
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
     <div className="authorization">
-      <div className="authorization__header">
-        <img className="header__logo" src={logo} alt="лого" />
-        <nav className="authorization__menu">
-          <button className="authorization__header-link">Регистрация</button>
-        </nav>
-      </div>
       <form className="authorization__form">
         <h2 className="authorization__form-header">Вход</h2>
-        <input 
+        <input
+          onChange={handleChange} 
           type="email" 
           className="authorization__input"
           id="email"
@@ -21,7 +32,8 @@ function Register() {
           required 
           placeholder="Email"
         />
-        <input 
+        <input
+          onChange={handleChange}
           type="password" 
           className="authorization__input" 
           id="password"
@@ -31,7 +43,10 @@ function Register() {
           pattern="[A-Za-zА-Яа-яЁё0-9 -]{2,40}" 
         />
         <button type="submit" className="authorization__submit">Войти</button>
-        <button className="authorization__form-link">Ещё не зарегистрированы? Регистрация</button>
+        <div className="authorization__form-nav">
+          <span>Ещё не зарегистрированы?&nbsp;</span>
+          <NavLink className="authorization__form-link" to="/sign-up">Регистрация</NavLink>
+        </div>
       </form>
     </div>
   );
