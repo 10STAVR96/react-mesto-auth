@@ -1,30 +1,44 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory, withRouter } from 'react-router-dom';
 import * as auth from '../utils/auth';
 
-function Register() {
-  const [info, setInfo] = React.useState({
-    email: '',
-    password: ''
-  });
+function Login(props) {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const history = useHistory();
+  
+  function handleChangeEmail (e) {
+    setEmail(e.target.value);
+  }
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setInfo({
-      [name]: value
-    });
+  function handleChangePassword (e) {
+    setPassword(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!email || !password) {
+      return;
+    }
+    auth.authorize(email, password)
+    .then((data) => {
+      if (data.token) {
+        setEmail('');
+        setPassword('');
+        props.handleLogin();
+        history.push('/cards');
+      }
+    })
+    .catch((err) => console.log(err));
   }
 
   return (
     <div className="authorization">
-      <form className="authorization__form">
+      <form onSubmit={handleSubmit} className="authorization__form">
         <h2 className="authorization__form-header">Вход</h2>
         <input
-          onChange={handleChange} 
+          onChange={handleChangeEmail} 
           type="email" 
           className="authorization__input"
           id="email"
@@ -33,7 +47,7 @@ function Register() {
           placeholder="Email"
         />
         <input
-          onChange={handleChange}
+          onChange={handleChangePassword}
           type="password" 
           className="authorization__input" 
           id="password"
@@ -52,4 +66,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect  } from 'react-router-dom';
+import { Route, Switch, Redirect, useHistory, withRouter } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -16,11 +16,13 @@ import FormValidator from '../utils/FormValidator';
 import { formElements } from '../utils/utils';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import ProtectedRoute from './ProtectedRoute';
+import * as auth from '../utils/auth';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedInEmail, setLoggedInEmail] = React.useState('');
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  const [successInfoToolTip, setSuccessInfoToolTip] = React.useState('aad');
+  const [successInfoToolTip, setSuccessInfoToolTip] = React.useState(false);  //стейт для смены стиля InfoToolTip
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -30,7 +32,11 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [cardDelete, setCardDelete] = React.useState([]);
+  const history = useHistory();
 
+  function handleLogin() {
+    setLoggedIn(true);
+  }
   function handleSuccessInfoToolTip() {
     setSuccessInfoToolTip(true);
   }
@@ -149,13 +155,24 @@ function App() {
     formProfileValidation.enableValidation();
     formAvatarValidation.enableValidation();
     formCardValidation.enableValidation();
-  }, []);
+  
+    const token = localStorage.getItem('token');
+    if (token) {
+      auth.getToken(token)
+      .then((res) => {
+        if (res.data) {
+          handleLogin();
+          setLoggedInEmail(res.data.email);
+          history.push('/cards');
+        }
+      });
+    }
+  }, [history]);
 
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-      <BrowserRouter>
-        <Header />
+        <Header loggedInEmail={loggedInEmail} />
         <Switch>
           <ProtectedRoute 
             path="/cards" 
@@ -173,9 +190,9 @@ function App() {
             <Register openInfoToolTip={handleInfoTooltipOpen} successInfoToolTip={handleSuccessInfoToolTip} />
           </Route>
           <Route path="/sign-in">
-            <Login openInfoToolTip={handleInfoTooltipOpen} successInfoToolTip={handleSuccessInfoToolTip} />
+            <Login openInfoToolTip={handleInfoTooltipOpen} successInfoToolTip={handleSuccessInfoToolTip} handleLogin={handleLogin} />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             { loggedIn ? <Redirect to="/cards" /> : <Redirect to="/sign-in" /> }
           </Route>
         </Switch>
@@ -187,11 +204,9 @@ function App() {
         <AddPlacePopup isOpen={isAddPlacePopupOpen}  onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
         <ConfirmationPopup isOpen={isConfirmPopupOpen} onSubmit={handleConfirmDeleteCardSubmit} onClose={closeAllPopups} />
         <ImagePopup isOpen={selectedCard} onClose={closeAllPopups} card={currentCard} />
-
-      </BrowserRouter>
       </CurrentUserContext.Provider>
     </div>
   );
 }
 
-export default App;
+export default withRouter(App);

@@ -1,35 +1,32 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, useHistory, withRouter } from 'react-router-dom';
 import * as auth from '../utils/auth';
 
 function Register(props) {
-  const [info, setInfo] = React.useState({
-    email: '',
-    password: ''
-  });
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const history = useHistory();
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setInfo({
-      [name]: value
-    });
+  function handleChangeEmail (e) {
+    setEmail(e.target.value);
+  }
+
+  function handleChangePassword (e) {
+    setPassword(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    let { email, password } = info;
-    auth.register(email, password).then((res) => {
+    auth.register(email, password)
+    .then((res) => {
       if (res) {
         props.successInfoToolTip();
-        props.openInfoToolTip();
-        props.history.push('/sign-in');
+        setTimeout(props.openInfoToolTip, 1000); //открываем InfoToolTip с задержкой чтобы стили успели смениться
+        history.push('/sign-in');
       } else {
         props.openInfoToolTip();
-        setInfo({
-          message: '400 - некорректно заполнено одно из полей'
-        })
       }
-    })
+    });
   }
 
   return (
@@ -37,7 +34,7 @@ function Register(props) {
       <form onSubmit={handleSubmit} className="authorization__form">
         <h2 className="authorization__form-header">Регистрация</h2>
         <input 
-          onChange={handleChange}
+          onChange={handleChangeEmail}
           type="email" 
           className="authorization__input"
           id="email"
@@ -46,7 +43,7 @@ function Register(props) {
           placeholder="Email"
         />
         <input 
-          onChange={handleChange}
+          onChange={handleChangePassword}
           type="password" 
           className="authorization__input" 
           id="password"
