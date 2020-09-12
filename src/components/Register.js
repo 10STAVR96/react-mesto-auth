@@ -31,7 +31,7 @@ function Register(props) {
 
   return (
     <div className="authorization">
-      <form onSubmit={handleSubmit} className="authorization__form">
+      <form onSubmit={handleSubmit} className="authorization__form" id="register">
         <h2 className="authorization__form-header">Регистрация</h2>
         <input 
           onChange={handleChangeEmail}

@@ -11,3 +11,10 @@
   display: flex;
   justify-content: center;
 }
+
+@media screen and (max-width: 374px) {
+  .authorization__form-nav {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

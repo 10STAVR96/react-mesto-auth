@@ -7,3 +7,9 @@
   color: #ffffff;
   margin: 0 24px 0 0;
 }
+
+@media screen and (max-width: 374px) {
+  .header__email {
+    margin: 0;
+  }
+}

@@ -1,0 +1,11 @@
+@media screen and (max-width: 374px) {
+  .header__menu_mobile {
+    height: 142px;
+    border-bottom: 1px solid #545454;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+}

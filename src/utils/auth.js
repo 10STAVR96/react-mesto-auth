@@ -25,12 +25,11 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({ email, password })
   })
-  .then((res) => res.json())
-  .then((data) => {
-    if (data.token) {
-      localStorage.setItem('token', data.token);
-      return data;
+  .then((res) => {
+    if(res.ok) {
+        return res.json();
     }
+    return Promise.reject(res.status === 401 ? '401 - пользователь с email не найден' : '400 - не передано одно из полей');
   })
   .catch((err) => console.log(err));
 };
@@ -43,6 +42,11 @@ export const getToken = (token) => {
       'Authorization': `Bearer ${token}`,
     }
   })
-  .then(res => res.json())
-  .then(data => data)
-}
+  .then((res) => {
+    if(res.ok) {
+        return res.json();
+    }
+    return Promise.reject(`${res.status} - Переданный токен некорректен`);
+  })
+  .catch((err) => console.log(err));
+};

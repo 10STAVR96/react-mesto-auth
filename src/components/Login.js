@@ -24,10 +24,14 @@ function Login(props) {
     auth.authorize(email, password)
     .then((data) => {
       if (data.token) {
+        localStorage.setItem('token', data.token);
         setEmail('');
         setPassword('');
         props.handleLogin();
-        history.push('/cards');
+        props.checkToken();
+        setTimeout(() => {   //задержка для того, чтобы успел смениться email предыдущего пользователя
+          history.push('/cards');
+        }, 500);
       }
     })
     .catch((err) => console.log(err));
@@ -35,7 +39,7 @@ function Login(props) {
 
   return (
     <div className="authorization">
-      <form onSubmit={handleSubmit} className="authorization__form">
+      <form onSubmit={handleSubmit} className="authorization__form" id="login">
         <h2 className="authorization__form-header">Вход</h2>
         <input
           onChange={handleChangeEmail} 
@@ -66,4 +70,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default withRouter(Login);
