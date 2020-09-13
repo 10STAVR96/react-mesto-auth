@@ -12,7 +12,7 @@ export const register = (email, password) => {
     if(res.ok) {
         return res.json();
     }
-    return Promise.reject(`${res.status} - некорректно заполнено одно из полей`);
+    return res.json().then((data) => Promise.reject(`${res.status} - ${data.error || 'Ошибка'}`));
   })
   .catch((err) => console.log(err));
 };
@@ -29,7 +29,7 @@ export const authorize = (email, password) => {
     if(res.ok) {
         return res.json();
     }
-    return Promise.reject(res.status === 401 ? '401 - пользователь с email не найден' : '400 - не передано одно из полей');
+    return res.json().then((data) => Promise.reject(`${res.status} - ${data.error || 'пользователь с email не найден'}`));
   })
   .catch((err) => console.log(err));
 };
@@ -46,7 +46,7 @@ export const getToken = (token) => {
     if(res.ok) {
         return res.json();
     }
-    return Promise.reject(`${res.status} - Переданный токен некорректен`);
+    return res.json().then((data) => Promise.reject(`${res.status} - ${data.error || 'токен не передан или передан не в том формате'}`));
   })
   .catch((err) => console.log(err));
 };

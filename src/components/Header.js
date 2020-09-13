@@ -34,8 +34,10 @@ function Header(props) {
   );
 
   React.useEffect(() => {
-    setHeaderWidth(headerElement.current.parentElement.clientWidth);
-  }, [headerElement]);
+    if (props.loggedIn) {
+      setHeaderWidth(headerElement.current.parentElement.clientWidth);
+    }
+  }, [headerElement, props.loggedIn]);
 
   return (
     <>

@@ -29,9 +29,7 @@ function Login(props) {
         setPassword('');
         props.handleLogin();
         props.checkToken();
-        setTimeout(() => {   //задержка для того, чтобы успел смениться email предыдущего пользователя
-          history.push('/cards');
-        }, 500);
+        history.push('/cards');
       }
     })
     .catch((err) => console.log(err));
