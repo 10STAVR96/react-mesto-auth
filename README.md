@@ -27,4 +27,4 @@ HTML, CSS, БЭМ, JS, React JS
 
 Данный сайт тестировался в Google Chrome, Yandex Browser, Mozila Firefox, Opera.
 
-* [Ссылка на Github Pages](http://10stavr96.github.io/mesto-react/)
+* [Ссылка на Github Pages](https://10stavr96.github.io/react-mesto-auth/)
