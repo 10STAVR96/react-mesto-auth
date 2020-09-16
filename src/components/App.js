@@ -52,7 +52,7 @@ function App() {
 
   React.useEffect(() => {
     checkToken();
-  }, [history]);  // eslint ругается и хочет добавить саму функцию в массив зависимостей, что будет ошибкой, поэтому как то так >)
+  }, [history]);  // eslint ругается и хочет добавить саму функцию в массив зависимостей, что будет ошибкой, поэтому как то так, функция срабатывает 1 раз - при перезагрузке страницы >)
 
   return (
     <div className="page">
@@ -73,6 +73,7 @@ function App() {
               checkToken={checkToken}
             />
           </Route>
+          <ProtectedRoute path="/" loggedIn={loggedIn} component={MainPage} />
         </Switch>
         <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} successStyle={successInfoToolTip} />
     </div>
