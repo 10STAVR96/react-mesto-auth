@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header';
 import MainPage from './MainPage';
 import Register from './Register';
@@ -73,7 +73,9 @@ function App() {
               checkToken={checkToken}
             />
           </Route>
-          <ProtectedRoute path="/" loggedIn={loggedIn} component={MainPage} />
+          <Route path="/">
+            <Redirect to="/sign-in" />
+          </Route>
         </Switch>
         <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} successStyle={successInfoToolTip} />
     </div>
