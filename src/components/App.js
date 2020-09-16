@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header';
 import MainPage from './MainPage';
 import Register from './Register';
@@ -53,7 +53,7 @@ function App() {
   React.useEffect(() => {
     checkToken();
   }, [history]);  // eslint ругается и хочет добавить саму функцию в массив зависимостей, что будет ошибкой, поэтому как то так, функция срабатывает 1 раз - при перезагрузке страницы >)
-                  // папка pages нужна для github-pages, без нее проект не откроется
+              
   return (
     <div className="page">
         <Header loggedInEmail={loggedInEmail} signOut={signOut} loggedIn={loggedIn} />
@@ -73,7 +73,9 @@ function App() {
               checkToken={checkToken}
             />
           </Route>
-          <ProtectedRoute path="/" loggedIn={loggedIn} component={MainPage} />
+          <Route path="/">
+            <Redirect to="/sign-in" />
+          </Route>
         </Switch>
         <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} successStyle={successInfoToolTip} />
     </div>
