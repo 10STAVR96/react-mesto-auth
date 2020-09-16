@@ -1,8 +1,9 @@
 import React from 'react';
-import { NavLink, useHistory, withRouter } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import * as auth from '../utils/auth';
 
 function Register(props) {
+  const { successInfoToolTip, openInfoToolTip } = props;
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const history = useHistory();
@@ -20,11 +21,11 @@ function Register(props) {
     auth.register(email, password)
     .then((res) => {
       if (res) {
-        props.successInfoToolTip();
-        setTimeout(props.openInfoToolTip, 1000); //открываем InfoToolTip с задержкой чтобы стили успели смениться
+        successInfoToolTip();
+        setTimeout(openInfoToolTip, 1000); //открываем InfoToolTip с задержкой чтобы стили успели смениться
         history.push('/sign-in');
       } else {
-        props.openInfoToolTip();
+        openInfoToolTip();
       }
     });
   }
@@ -62,4 +63,4 @@ function Register(props) {
   );
 }
 
-export default withRouter(Register);
+export default Register;

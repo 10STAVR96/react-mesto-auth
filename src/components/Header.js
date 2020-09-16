@@ -5,6 +5,7 @@ import menuOpen from '../images/mobile-menu.svg';
 import menuClose from '../images/close-icon.svg';
 
 function Header(props) {
+  const { loggedIn, loggedInEmail, signOut } = props;
   const headerElement = React.createRef();
   const [headerWidth, setHeaderWidth] = React.useState('');
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -19,7 +20,7 @@ function Header(props) {
     </button>
   );
   const nav = (
-    <nav className={props.loggedIn ? "header__menu header__menu_mobile" : "header__menu"}>
+    <nav className={loggedIn ? "header__menu header__menu_mobile" : "header__menu"}>
       <Route path="/sign-up">
         <NavLink className="header__link" to="/sign-in">Войти</NavLink>
       </Route>
@@ -27,25 +28,25 @@ function Header(props) {
         <NavLink className="header__link" to="/sign-up">Регистрация</NavLink>
       </Route>
       <Route path="/cards">
-        <p className="header__email">{props.loggedInEmail}</p>
-        <button onClick={props.signOut} type="button" className="header__logout">Выйти</button>
+        <p className="header__email">{loggedInEmail}</p>
+        <button onClick={signOut} type="button" className="header__logout">Выйти</button>
       </Route>
     </nav>
   );
 
   React.useEffect(() => {
-    if (props.loggedIn) {
+    if (loggedIn) {
       setHeaderWidth(headerElement.current.parentElement.clientWidth);
     }
-  }, [headerElement, props.loggedIn]);
+  }, [headerElement, loggedIn]);
 
   return (
     <>
-    { (headerWidth < 375 && isMenuOpen && props.loggedIn) ? nav : null }
+    { (headerWidth < 375 && isMenuOpen && loggedIn) ? nav : null }
     <header ref={headerElement} className="header">
       <img className="header__logo" src={logo} alt="лого" />
       { (headerWidth >= 375) ? nav : null }
-      { (headerWidth >= 375) ? null : props.loggedIn ? buttonMenuOpen : nav }
+      { (headerWidth >= 375) ? null : loggedIn ? buttonMenuOpen : nav }
     </header>
     </>
   );

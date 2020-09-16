@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect, useHistory, withRouter } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header';
 import MainPage from './MainPage';
 import Register from './Register';
@@ -24,19 +24,16 @@ function App() {
   function handleInfoTooltipOpen() {
     setIsInfoTooltipOpen(true);
   }
- 
   function closeAllPopups() {
     setIsInfoTooltipOpen(false);
     setTimeout(setSuccessInfoToolTip, 2000, false);
   }
-
   function signOut () {
     setLoggedInEmail('');
     localStorage.removeItem('token');
     setLoggedIn(false);
     history.push('/sign-in');
   }
-
   function checkToken() {
     const token = localStorage.getItem('token');
     if (token) {
@@ -45,6 +42,9 @@ function App() {
         if (res.data) {
           handleLogin();
           setLoggedInEmail(res.data.email);
+          history.push('/cards');
+        } else {
+          localStorage.removeItem('token');
         }
       });
     }
@@ -52,8 +52,7 @@ function App() {
 
   React.useEffect(() => {
     checkToken();
-    history.push('/cards');
-  }, []);
+  }, [history]);  // eslint ругается и хочет добавить саму функцию в массив зависимостей, что будет ошибкой, поэтому как то так >)
 
   return (
     <div className="page">
@@ -74,13 +73,10 @@ function App() {
               checkToken={checkToken}
             />
           </Route>
-          <Route exact path="/">
-            { loggedIn ? <Redirect to="/cards" /> : <Redirect to="/sign-in" /> }
-          </Route>
         </Switch>
         <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} successStyle={successInfoToolTip} />
     </div>
   );
 }
 
-export default withRouter(App);
+export default App;

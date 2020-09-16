@@ -1,8 +1,9 @@
 import React from 'react';
-import { NavLink, useHistory, withRouter } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import * as auth from '../utils/auth';
 
 function Login(props) {
+  const { handleLogin, checkToken } = props;
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const history = useHistory();
@@ -10,11 +11,9 @@ function Login(props) {
   function handleChangeEmail (e) {
     setEmail(e.target.value);
   }
-
   function handleChangePassword (e) {
     setPassword(e.target.value);
   }
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -27,8 +26,8 @@ function Login(props) {
         localStorage.setItem('token', data.token);
         setEmail('');
         setPassword('');
-        props.handleLogin();
-        props.checkToken();
+        handleLogin();
+        checkToken();
         history.push('/cards');
       }
     })
@@ -68,4 +67,4 @@ function Login(props) {
   );
 }
 
-export default withRouter(Login);
+export default Login;

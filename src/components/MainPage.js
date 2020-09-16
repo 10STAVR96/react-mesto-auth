@@ -7,7 +7,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
-import FormValidator from '../utils/FormValidator';
+import FormValidator from '../utils/formValidator';
 import { formElements } from '../utils/utils';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
