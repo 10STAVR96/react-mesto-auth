@@ -53,7 +53,7 @@ function App() {
   React.useEffect(() => {
     checkToken();
   }, [history]);  // eslint ругается и хочет добавить саму функцию в массив зависимостей, что будет ошибкой, поэтому как то так, функция срабатывает 1 раз - при перезагрузке страницы >)
-                  // папка pages нужна для gh-pages, без нее проект не откроется на сайте
+            
   return (
     <div className="page">
         <Header loggedInEmail={loggedInEmail} signOut={signOut} loggedIn={loggedIn} />
