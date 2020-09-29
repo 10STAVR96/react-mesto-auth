@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "./static/css/main.21936807.chunk.css",
-    "main.js": "./static/js/main.da2b45ce.chunk.js",
-    "main.js.map": "./static/js/main.da2b45ce.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.a5163ae5.js",
-    "runtime-main.js.map": "./static/js/runtime-main.a5163ae5.js.map",
-    "static/js/2.3ff9ee50.chunk.js": "./static/js/2.3ff9ee50.chunk.js",
-    "static/js/2.3ff9ee50.chunk.js.map": "./static/js/2.3ff9ee50.chunk.js.map",
-    "index.html": "./index.html",
-    "precache-manifest.3dc4a25927b06612d2ad45c148e4473d.js": "./precache-manifest.3dc4a25927b06612d2ad45c148e4473d.js",
-    "service-worker.js": "./service-worker.js",
-    "static/css/main.21936807.chunk.css.map": "./static/css/main.21936807.chunk.css.map",
-    "static/js/2.3ff9ee50.chunk.js.LICENSE.txt": "./static/js/2.3ff9ee50.chunk.js.LICENSE.txt",
-    "static/media/index.css": "./static/media/remove-card-button.efa6fb04.svg",
-    "static/media/edit-avatar-pencil.svg": "./static/media/edit-avatar-pencil.d476a8b8.svg",
-    "static/media/error.svg": "./static/media/error.4072126c.svg",
-    "static/media/logo.svg": "./static/media/logo.c6f11019.svg",
-    "static/media/mobile-menu.svg": "./static/media/mobile-menu.5df9ea80.svg",
-    "static/media/success.svg": "./static/media/success.e38b395c.svg"
+    "main.css": "./sign-in/static/css/main.21936807.chunk.css",
+    "main.js": "./sign-in/static/js/main.53fe87df.chunk.js",
+    "main.js.map": "./sign-in/static/js/main.53fe87df.chunk.js.map",
+    "runtime-main.js": "./sign-in/static/js/runtime-main.10065bcb.js",
+    "runtime-main.js.map": "./sign-in/static/js/runtime-main.10065bcb.js.map",
+    "static/js/2.3ff9ee50.chunk.js": "./sign-in/static/js/2.3ff9ee50.chunk.js",
+    "static/js/2.3ff9ee50.chunk.js.map": "./sign-in/static/js/2.3ff9ee50.chunk.js.map",
+    "index.html": "./sign-in/index.html",
+    "precache-manifest.f085cbc774f80078cc4f1f8f59a55fc6.js": "./sign-in/precache-manifest.f085cbc774f80078cc4f1f8f59a55fc6.js",
+    "service-worker.js": "./sign-in/service-worker.js",
+    "static/css/main.21936807.chunk.css.map": "./sign-in/static/css/main.21936807.chunk.css.map",
+    "static/js/2.3ff9ee50.chunk.js.LICENSE.txt": "./sign-in/static/js/2.3ff9ee50.chunk.js.LICENSE.txt",
+    "static/media/index.css": "./sign-in/static/media/remove-card-button.efa6fb04.svg",
+    "static/media/edit-avatar-pencil.svg": "./sign-in/static/media/edit-avatar-pencil.d476a8b8.svg",
+    "static/media/error.svg": "./sign-in/static/media/error.4072126c.svg",
+    "static/media/logo.svg": "./sign-in/static/media/logo.c6f11019.svg",
+    "static/media/mobile-menu.svg": "./sign-in/static/media/mobile-menu.5df9ea80.svg",
+    "static/media/success.svg": "./sign-in/static/media/success.e38b395c.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a5163ae5.js",
+    "static/js/runtime-main.10065bcb.js",
     "static/js/2.3ff9ee50.chunk.js",
     "static/css/main.21936807.chunk.css",
-    "static/js/main.da2b45ce.chunk.js"
+    "static/js/main.53fe87df.chunk.js"
   ]
 }
